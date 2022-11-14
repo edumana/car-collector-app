@@ -17,7 +17,6 @@ urlpatterns = [
   path('tires/<int:pk>/update/', views.TireUpdate.as_view(), name='tires_update'),
   path('tires/<int:pk>/delete/', views.TireDelete.as_view(), name='tires_delete'),
   path('cars/<int:car_id>/assoc_tire/<int:tire_id>/', views.assoc_tire, name='assoc_tire'),
-  path('admin/', admin.site.urls),
   path('accounts/', include('django.contrib.auth.urls')),
   path('accounts/signup/', views.signup, name='signup'),
 ]
