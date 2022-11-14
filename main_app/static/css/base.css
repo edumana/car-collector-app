@@ -165,7 +165,8 @@ nav li {
 .text-logo{
   font-weight: 800;
   font-size: 2em;
-  color: var(--nav-bg);
+  color: #000;
+  text-decoration: none !important;
 }
 
 @media only screen and (min-width: 768px) {

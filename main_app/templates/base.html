@@ -14,10 +14,12 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
   {% block head %}
   {% endblock %}
+  <script src="https://kit.fontawesome.com/470059169e.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
   <header>
-    <a class="text-logo" href="/">Car Collector</a>
+    <i class="fa-solid fa-car fa-black fa-2x"></i><a class="text-logo" href="/">&nbsp- Car Collector</a>
     <nav>
       <ul>
         {% if user.is_authenticated %}

@@ -3,7 +3,6 @@ from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import User
 
-
 DETAILS = (
   ('R', 'Does not need maintenance'),
   ('M', 'Needs Further Maintenance'),
@@ -36,7 +35,6 @@ class Car(models.Model):
 
   def maintenance_today(self):
     return self.maintenance_set.filter(date=date.today()).count() >= 1
-
 
 class Maintenance(models.Model):
   date = models.DateField('Last Maintenance Date')
