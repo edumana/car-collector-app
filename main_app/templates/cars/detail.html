@@ -43,8 +43,8 @@
   </div>
 </section>
 
-<div class="feedings-toy-container">
-  <section class="feedings">
+<div class="main-tire-container">
+  <section class="maintenances">
     <div class="subsection-title">
       <h2>Maintenance</h2>
     </div>
@@ -55,10 +55,10 @@
       class="subsection-content"
     >
       
-          {% if car.maintained_today %}
-            <p class="fed">{{car.name}} is up to date with maintenance.</p>
+          {% if car.maintenance_today %}
+            <p class="maint">{{car.name}} is up to date with maintenance.</p>
           {% else %}
-            <p class="unfed">{{car.name}} might be in need of maintenance.</p>
+            <p class="unmain">{{car.name}} might be in need of maintenance.</p>
           {% endif %}
           {% comment %} New markup above {% endcomment %}
           {% csrf_token %}
@@ -85,21 +85,8 @@
         <p>{{car.name}} has never undergone maintenance.</p>
       </div>
     {% endif %}
-    <table>
-      <thead>
-        <tr><th>Date</th><th>Maintenance</th></tr>
-      </thead>
-      <tbody>
-        {% for maintenance in car.maintenance_set.all %}
-          <tr>
-            <td>{{maintenance.date}}</td>
-            <td>{{maintenance.get_details_display}}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
   </section>
-  <section class="toys">
+  <section class="tires">
     <div class="subsection-title">
       <h2>Tires</h2>
     </div>
@@ -107,7 +94,7 @@
     <div class="subsection-content">
       {% if car.tires.count %}
         {% for tire in car.tires.all %}
-          <div class="toy-container">
+          <div class="tire-container">
             <div 
               class="color-block"
               style="background-color: gray"
@@ -118,14 +105,14 @@
           </div>
         {% endfor %}
       {% else %}
-        <p class="no-toys">{{car.name}} doesn't have any tires.</p>
+        <p class="no-tire">{{car.name}} doesn't have any tires.</p>
       {% endif %}
     </div>
     <h3>Available Tires</h3>
     <div class="subsection-content">
       {% if tires.count %}
       {% for tire in tires.all %}
-        <div class="toy-container">
+        <div class="tire-container">
           <div 
             class="color-block"
             style="background-color: gray"
@@ -140,7 +127,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <p class="all-toys">
+      <p class="all-tire">
         {{car.name}} already has all the available tires.
       </p>
     {% endif %}

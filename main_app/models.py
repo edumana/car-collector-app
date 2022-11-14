@@ -35,7 +35,7 @@ class Car(models.Model):
     return reverse('cars_detail', kwargs={'car_id': self.id})
 
   def maintenance_today(self):
-    return self.maintenance_set.filter(date=date.today()).count() >= len(DETAILS)
+    return self.maintenance_set.filter(date=date.today()).count() >= 1
 
 
 class Maintenance(models.Model):

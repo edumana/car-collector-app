@@ -6,8 +6,6 @@ main {
   height: 100%;
 }
 
-
-
 main > section {
   width: 100%;
   padding: 10px 8px;
@@ -33,7 +31,6 @@ main > section {
   max-width: 50vw;
   border-radius: 20px;
 }
-
 
 .login {
   display: flex;
