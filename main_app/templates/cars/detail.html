@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link 
+  href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" 
+  rel="stylesheet" 
+/>
+<link rel="stylesheet" href="{% static 'css/mcdp.css' %}">
+<script 
+  src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"
+>
+</script>
+<link 
+  rel="stylesheet" 
+  type="text/css" 
+  href="{% static 'css/cars/car-detail.css' %}"
+/>
+<script defer src="{% static 'js/car-detail.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<section class="car-container">
+  <div class="car-img">
+    <img style="width: 150px;"
+      src="{% static 'images/landcruiser.png' %}" 
+      
+    >
+  </div>
+  <div class="car-details">
+    <h1>{{ car.name }}</h1>
+    {% if car.year > 0 %}
+      <h2>A {{ car.year }} {{ car.make }}</h2>
+    {% else %}
+      <h2>A {{ car.make }}.</h2>
+    {% endif %}
+    <p>{{ car.description }}</p>
+    <div class="car-actions">
+      <a href="{% url 'cars_update' car.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'cars_delete' car.id %}" class="btn danger">Delete</a>
+    </div>
+  </div>
+</section>
+
+<div class="feedings-toy-container">
+  <section class="feedings">
+    <div class="subsection-title">
+      <h2>Maintenance</h2>
+    </div>
+    <h3>Add Maintenance</h3>
+    <form
+      action="{% url 'add_maintenance' car.id %}" 
+      method="post" 
+      class="subsection-content"
+    >
+      
+          {% if car.maintained_today %}
+            <p class="fed">{{car.name}} is up to date with maintenance.</p>
+          {% else %}
+            <p class="unfed">{{car.name}} might be in need of maintenance.</p>
+          {% endif %}
+          {% comment %} New markup above {% endcomment %}
+          {% csrf_token %}
+          {{ maintenance_form.as_p }}
+          <button type="submit" class="btn submit">Add Maintenance</button>
+    </form>
+    <h3>Past Maintenance</h3>
+    {% if car.maintenance_set.all.count %}
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Maintenance</th></tr>
+        </thead>
+        <tbody>
+          {% for maintenance in car.maintenance_set.all %}
+            <tr>
+              <td>{{maintenance.date}}</td>
+              <td>{{maintenance.get_details_display}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+			<div class="subsection-content">
+        <p>{{car.name}} has never undergone maintenance.</p>
+      </div>
+    {% endif %}
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Maintenance</th></tr>
+      </thead>
+      <tbody>
+        {% for maintenance in car.maintenance_set.all %}
+          <tr>
+            <td>{{maintenance.date}}</td>
+            <td>{{maintenance.get_details_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <section class="toys">
+    <div class="subsection-title">
+      <h2>Tires</h2>
+    </div>
+    <h3>{{ car.name }}'s Tires</h3>
+    <div class="subsection-content">
+      {% if car.tires.count %}
+        {% for tire in car.tires.all %}
+          <div class="toy-container">
+            <div 
+              class="color-block"
+              style="background-color: gray"
+            ></div>
+            <a href="{% url 'tires_detail' tire.id %}">
+              <p>A {{ tire.hardness }} {{ tire.name }}</p>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="no-toys">{{car.name}} doesn't have any tires.</p>
+      {% endif %}
+    </div>
+    <h3>Available Tires</h3>
+    <div class="subsection-content">
+      {% if tires.count %}
+      {% for tire in tires.all %}
+        <div class="toy-container">
+          <div 
+            class="color-block"
+            style="background-color: gray"
+          ></div>
+          <a href="{% url 'tires_detail' tire.id %}">
+            <p>A {{ tire.hardness }} {{ tire.name }}</p>
+          </a>
+          <form action="{% url 'assoc_tire' car.id tire.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn submit">Give Tires</button>
+          </form>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="all-toys">
+        {{car.name}} already has all the available tires.
+      </p>
+    {% endif %}
+    </div>
+  </section>
+</div>
+
+
+{% endblock %}

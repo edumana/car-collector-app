@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/toys/toy-detail.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+  
+<div class="card" style="border-color: black">
+  <div class="card-bg" style="background-color: gray"></div>
+  <div class="card-content">
+    <h2>{{ tire.name }}</h2>
+    <p>A {{ tire.hardness }} tire</p>
+  </div>
+</div>
+<a href="{% url 'tires_update' tires.id %}" class="btn warn">Edit</a>
+<a href="{% url 'tires_delete' tires.id %}" class="btn danger">Delete</a>
+
+{% endblock %}

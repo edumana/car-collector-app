@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link 
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/cars/car-index.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <h1>Car List</h1>
+  <img src="{% static 'images/jetta.png' %}" alt="Jetta" />
+  <img src="{% static 'images/rav4.png' %}" alt="Rav4" />
+  <img src="{% static 'images/4runner.png' %}" alt="4Runner" />
+  <img src="{% static 'images/landcruiser.png' %}" alt="Land Cruiser" />
+</section>
+
+<section class="card-container">
+  {% for car in cars %}
+    <div class="card">
+      <a href="{% url 'cars_detail' car.id %}">
+        <div class="card-content">
+          <div class="card-img-container">
+            <img style="width: 150px;"
+              src="{% static 'images/landcruiser.png' %}" 
+            >
+          </div>
+          <h2 class="card-title">{{ car.name }}</h2>
+          {% if car.year > 0 %}
+            <p>A {{ car.year }} {{ car.make }}</p>
+          {% else %}
+            <p>A {{ car.make }}.</p>
+          {% endif %}
+          <p><small>{{ car.description }}</small></p>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}
