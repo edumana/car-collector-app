@@ -16,6 +16,9 @@ from django.http import HttpResponse
 class Home(LoginView):
   template_name = 'home.html'
 
+def home(request):
+  return render(request, 'home.html')
+
 def about(request):
   return render(request, 'about.html')
 
@@ -44,9 +47,6 @@ def add_maintenance(request, car_id):
     new_maintenance.car_id = car_id
     new_maintenance.save()
   return redirect('cars_detail', car_id=car_id)
-
-def home(request):
-  return render(request, 'home.html')
 
 class CarUpdate(LoginRequiredMixin,UpdateView):
   model = Car
